@@ -3,7 +3,18 @@ import json
 import os
 from datetime import datetime, timezone
 from pathlib import Path
+from threading import Thread
+import os
 
+from keep_alive import app
+
+def run_web():
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 10000))
+    )
+
+Thread(target=run_web, daemon=True).start()
 from dotenv import load_dotenv
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.constants import ParseMode
